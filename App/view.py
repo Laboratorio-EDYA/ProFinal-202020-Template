@@ -32,6 +32,7 @@ from DISClib.ADT import stack
 import timeit
 assert config
 from time import process_time
+import controller
 
 """
 La vista se encarga de la interacción con el usuario.

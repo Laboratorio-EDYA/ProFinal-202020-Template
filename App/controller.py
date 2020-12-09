@@ -39,12 +39,12 @@ recae sobre el controlador.
 # ___________________________________________________
 #  Inicializacion del catalogo
 # ___________________________________________________
-def init():
+def init(tamaño, carga):
     """
     Llama la funcion de inicializacion  del modelo.
     """
     # catalog es utilizado para interactuar con el modelo
-    analyzer = model.newAnalyzer()
+    analyzer = model.newAnalyzer(tamaño, carga)
     return analyzer
 
 

@@ -32,11 +32,11 @@ from DISClib.Algorithms.Graphs import scc
 from DISClib.Algorithms.Graphs import dijsktra as djk
 from DISClib.Utils import error as error
 from DISClib.ADT import orderedmap as om
-<<<<<<< HEAD
+
 import datetime 
-=======
+
 from DISClib.Algorithms.Sorting import mergesort as ms
->>>>>>> 45fd5ac3bca3c459fd58412159be7c482c187b69
+
 assert config
 
 """
@@ -61,7 +61,7 @@ def newAnalyzer(size, loadfactor):
                                         maptype = 'CHAINING',
                                         loadfactor = loadfactor,
                                         comparefunction = compareTrips)
-    analyzer['datesByTaxis'] = om.newMap(maptype = 'RBT',
+    analyzer['datesByTaxis'] = om.newMap(omaptype = 'RBT',
                                         comparefunction = compareDates)
     analyzer['graph'] = gr.newGraph(datastructure = "ADJ_LIST",
                                     size = size,
@@ -131,7 +131,7 @@ def addCommunity(analyzer, actual):
     addVertex(analyzer, actual['dropoff_community_area'])
     addConnection(analyzer, actual['pickup_community_area'],actual['dropoff_community_area'], actual['trip_seconds'])
 
-def addVertex(analyzer,vertex)
+def addVertex(analyzer,vertex):
     try:
         if not gr.containsVertex(analyzer['graph'],vertex):
             gr.insertVertex(analyzer['graph'], vertex)
@@ -226,7 +226,7 @@ def mostTaxis(analyzer):
     while it.hasNext(iterator):
         key=it.next(iterator)
         value=m.get(analyzer['datesByTaxis'], key)
-        
+
         
 
         
