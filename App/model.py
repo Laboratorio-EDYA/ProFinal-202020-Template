@@ -156,7 +156,7 @@ def getAccidentsByRange(analyzer, initialDate, finalDate):
 def getAccidentsByRangeCode(analyzer, initialDate, offensecode):
     """
     Para una fecha determinada, retorna el numero de crimenes
-    de un tipo especifico.
+    de un tipo especifico.w
     """
     accidentdate = om.get(analyzer['dateIndex'], initialDate)
     if accidentdate['key'] is not None:
@@ -226,7 +226,6 @@ def parteA4(analyzer):
         lt.addLast(lista, data)
     ms.mergesort(lista, compareTrips)
     return lista
-        
 
 # ==============================
 # Funciones de Comparacion

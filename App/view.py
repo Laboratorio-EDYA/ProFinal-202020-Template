@@ -94,6 +94,26 @@ def menu2():
 # Debe existir una funcion en el model que calcule los puntos de cada pinche taksi
 # ------------------------------------------------------
 # def mejorHorario(analyzer, area1, area2):    Req. 3
+"""if initialHourM < 15:
+            initialHourM = '00'
+            initialHour = str(initialHourH) + ':' + initialHourM
+        elif (initialHourM >= 15 and initialHourM <= 45) or initialHourM == 30:    
+            initialHourM = '30'
+            initialHour = str(initialHourH) + ':' + initialHourM
+        elif initialHourM <= 60:
+            initialHourM = '00'
+            initialHourH += 1
+            initialHour = str(initialHourH) + ':' + initialHourM
+        if finalHourM < 15:
+            finalHourM = '00'
+            finalHour = str(finalHourH) + ':' + finalHourM
+        elif (finalHourM >= 15 and finalHourM <= 45) or finalHourM == 30:
+            finalHourM = '30'
+            finalHour = str(finalHourH) + ':' + finalHourM
+        elif finalHourM <= 60:
+            finalHourM = '00'
+            finalHourH += 1
+            finalHour = str(finalHourH) + ':' + finalHourM"""
 
 # def cargarDatos(analyzer):
 
@@ -102,14 +122,14 @@ Menu principal
 """
 
 def main():
-    analyzer = None
+    analyzer = True
     while True:
         printMenu()
         inputs = int(input('Selecciona una opción para continuar\n-> '))
         if inputs == 1:   #Inicio y carga
             t1_start = process_time() #tiempo inicial
             print("\nInicializando.....")
-            #canalyzer = controller.init(tamaño, carga)
+            analyzer = controller.init()
             # cargaDatos(analyzer)
             t1_stop = process_time() #tiempo final
             print("Tiempo de ejecución ",t1_stop-t1_start," segundos ")
@@ -122,29 +142,29 @@ def main():
                     menu1()
                     opcion = int(input('Selecciona una opción para continuar\n--> '))
                     if opcion == 1:
-                        # t1_start = process_time() #tiempo inicial
-                        # totalTaxis(analyzer)
-                        # t1_stop = process_time() #tiempo final
-                        # print("Esta función se ejecutó en ",t1_stop-t1_start," segundos ")
+                        t1_start = process_time() #tiempo inicial
+                        totalTaxis(analyzer)
+                        t1_stop = process_time() #tiempo final
+                        print("Esta función se ejecutó en ",t1_stop-t1_start," segundos ")
                     elif opcion == 2:
-                        # t1_start = process_time() #tiempo inicial
-                        # totalCompañias(analyzer)
-                        # t1_stop = process_time() #tiempo final
-                        # print("Esta función se ejecutó en ",t1_stop-t1_start," segundos ")
+                        t1_start = process_time() #tiempo inicial
+                        totalCompañias(analyzer)
+                        t1_stop = process_time() #tiempo final
+                        print("Esta función se ejecutó en ",t1_stop-t1_start," segundos ")
                     elif opcion == 3:
-                        # t1_start = process_time() #tiempo inicial
-                        # name = input('Digita el nombre de la compañía: ')
-                        # top = int(input('Digita el top límite: ))
-                        # topM(analyzer, name, top)
-                        # t1_stop = process_time() #tiempo final
-                        # print("Esta función se ejecutó en ",t1_stop-t1_start," segundos ")
+                        t1_start = process_time() #tiempo inicial
+                        name = input('Digita el nombre de la compañía: ')
+                        top = int(input('Digita el top límite: '))
+                        topM(analyzer, name, top)
+                        t1_stop = process_time() #tiempo final
+                        print("Esta función se ejecutó en ",t1_stop-t1_start," segundos ")
                     elif opcion == 4:
-                        # t1_start = process_time() #tiempo inicial
-                        # name = input('Digita el nombre de la compañía: ')
-                        # top = int(input('Digita el top límite: ))
-                        # topN(analyzer, name, top)
-                        # t1_stop = process_time() #tiempo final
-                        # print("Esta función se ejecutó en ",t1_stop-t1_start," segundos ")
+                        t1_start = process_time() #tiempo inicial
+                        name = input('Digita el nombre de la compañía: ')
+                        top = int(input('Digita el top límite: '))
+                        topN(analyzer, name, top)
+                        t1_stop = process_time() #tiempo final
+                        print("Esta función se ejecutó en ",t1_stop-t1_start," segundos ")
                     elif opcion == 5:
                         break
                     else:
@@ -158,32 +178,32 @@ def main():
                     menu2()
                     opcion = int(input('Selecciona una opción para continuar\n--> '))
                     if opcion == 1:
-                        # t1_start = process_time() #tiempo inicial
-                        # print('Digita la fecha de busqueda con formato YYYY-MM-DD')
-                        # year = input('Año: ')
-                        # month = input('Mes: )
-                        # day = input('Dia: ')
-                        # date = year + '-' + month + '-' + day
-                        # top = int(input('Digita el top límite: ))
-                        # puntosFecha(analyzer, date, top)
-                        # t1_stop = process_time() #tiempo final
-                        # print("Esta función se ejecutó en ",t1_stop-t1_start," segundos ")
+                        t1_start = process_time() #tiempo inicial
+                        print('Digita la fecha de busqueda con formato YYYY-MM-DD')
+                        year = input('Año: ')
+                        month = input('Mes: ')
+                        day = input('Dia: ')
+                        date = year + '-' + month + '-' + day
+                        top = int(input('Digita el top límite: '))
+                        puntosFecha(analyzer, date, top)
+                        t1_stop = process_time() #tiempo final
+                        print("Esta función se ejecutó en ",t1_stop-t1_start," segundos ")
                     elif opcion == 2:
-                        # t1_start = process_time() #tiempo inicial
-                        # print('Digita la fecha inicial de busqueda con formato YYYY-MM-DD')
-                        # year1 = input('Año: ')
-                        # month1 = input('Mes: )
-                        # day1 = input('Dia: ')
-                        # date1 = year1 + '-' + month1 + '-' + day1
-                        # print('Digita la fecha ifinal de busqueda con formato YYYY-MM-DD')
-                        # year2 = input('Año: ')
-                        # month2 = input('Mes: )
-                        # day2 = input('Dia: ')
-                        # date2 = year2 + '-' + month2 + '-' + day2
-                        # top = int(input('Digita el top límite: ))
-                        # puntosRango(analyzer, date, top)
-                        # t1_stop = process_time() #tiempo final
-                        # print("Esta función se ejecutó en ",t1_stop-t1_start," segundos ")
+                        t1_start = process_time() #tiempo inicial
+                        print('Digita la fecha inicial de busqueda con formato YYYY-MM-DD')
+                        year1 = input('Año: ')
+                        month1 = input('Mes: ')
+                        day1 = input('Dia: ')
+                        date1 = year1 + '-' + month1 + '-' + day1
+                        print('Digita la fecha ifinal de busqueda con formato YYYY-MM-DD')
+                        year2 = input('Año: ')
+                        month2 = input('Mes: ')
+                        day2 = input('Dia: ')
+                        date2 = year2 + '-' + month2 + '-' + day2
+                        top = int(input('Digita el top límite: '))
+                        puntosRango(analyzer, date, top)
+                        t1_stop = process_time() #tiempo final
+                        print("Esta función se ejecutó en ",t1_stop-t1_start," segundos ")
                     elif opcion == 3:
                         break
                     else:
@@ -192,13 +212,12 @@ def main():
             if analyzer == None:
                 print('¡KELLY CARGUE EL ARCHIVO PRIMERO!')
             else:
-                # t1_start = process_time() #tiempo inicial
-                # area1 = input('Digita el area comunitaria de inicio: ')
-                # area2 = input('Digita el area comunitaria final: ')
-                # mejorHorario(analyzer, area1, area2)
-                # t1_stop = process_time() #tiempo final
-                # print("Esta función se ejecutó en ",t1_stop-t1_start," segundos ")
-
+                t1_start = process_time() #tiempo inicial
+                area1 = input('Digita el area comunitaria de inicio: ')
+                area2 = input('Digita el area comunitaria final: ')
+                mejorHorario(analyzer, area1, area2)
+                t1_stop = process_time() #tiempo final
+                print("Esta función se ejecutó en ",t1_stop-t1_start," segundos ")
         elif inputs == 5:   #Salir
             print('Cerrando el programa ...')
             sys.exit(0)
