@@ -83,12 +83,22 @@ def menu2():
 # ----------------------------
 
 # def totalTaxis(analyzer):
-#    data = ctrl.parteA1(analyzer)
+#    data = ctrl.parteA1(analyzer)}
+#    print(data, ' taxis tienen servicios reportados')
 # def totalCompañias(analyzer):
 #     data = ctrl.parteA2(analyzer)
-# def topM(analyzer, name, top):
-#     
-# def topN(analyzer, name, top): 
+#     print(data,' compañías tiene al menos un taxi inscrito')
+# def topM(analyzer, top):
+#     res = []    
+#     data = ctrl.parteA3(analyzer)
+#     for each_data in data:
+#          res.append(each_data)
+#          if len(res) > top:
+#              break
+#     print('El top ',top,' de las compañías ordenadas por taxis afiliados es: ')
+#     for each_data in res:
+#         print(str(each_data))
+# def topN(analyzer, top): 
 
 # ----------------------------
 #     funciones menu 2
@@ -141,7 +151,7 @@ def mejorHorario(analyzer, area1, area2, hora_inicio, hora_fin):    # Req. 3
 
 def cargarDatos(analyzer):
     print("\nCargando información de taxis de Chicago .....")
-    controller.loadFile(analyzer, taxifile)
+    ctrl.loadFile(analyzer, taxifile)
     print('El limite de recursion actual: ' + str(sys.getrecursionlimit()))
     sys.setrecursionlimit(recursionLimit)
     print('El limite de recursion se ajusta a: ' + str(recursionLimit))
