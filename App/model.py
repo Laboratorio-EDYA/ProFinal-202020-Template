@@ -32,6 +32,7 @@ from DISClib.Algorithms.Graphs import scc
 from DISClib.Algorithms.Graphs import dijsktra as djk
 from DISClib.Utils import error as error
 from DISClib.ADT import orderedmap as om
+from DISClib.Algorithms.Sorting import mergesort as ms
 assert config
 
 """
@@ -179,21 +180,67 @@ def gradosAkilometros2(x):
 # Requerimientos
 # ==============================
 
+def parteA1(analyzer):
+    answer = 0
+    companies = m.keySet(analyzer['companyByTaxis'])
+    iterator = it.newIterator(companies)
+    while it.hasNext(iterator):
+        company = it.next(iterator)
+        value = m.get(analyzer['companyByTaxis'], company)['value']
+        answer += m.size(value)
+
+def parteA2(analyzer):
+    answer = 0
+    companies = m.keySet(analyzer['companyByTaxis'])
+    iterator = it.newIterator(companies)
+    while it.hasNext(iterator):
+        company = it.next(iterator)
+        value = m.get(analyzer['companyByTaxis'], company)['value']
+        size = m.size(value)
+        if size > 0:
+            answer += 1
+    return answer
+
+def parteA3(analyzer):
+    lista = lt.newList()
+    companies = m.keySet(analyzer['companyByTaxis'])
+    iterator = it.newIterator(companies)
+    while it.hasNext(iterator):
+        company = it.next(iterator)
+        value = m.get(analyzer['companyByTaxis'], company)['value']
+        size = m.size(value)
+        data = {'key': company, 'value': size}
+        lt.addLast(lista, data)
+    ms.mergesort(lista, compareTaxis)
+    return lista
+    
+def parteA4(analyzer):
+    lista = lt.newList()
+    companies = m.keySet(analyzer['companyByTrips'])
+    iterator = it.newIterator(companies)
+    while it.hasNext(iterator):
+        company = it.next(iterator)
+        value = m.get(analyzer['companyByTrips'], company)['value']
+        size = m.size(value)
+        data = {'key': company, 'value': size}
+        lt.addLast(lista, data)
+    ms.mergesort(lista, compareTrips)
+    return lista
 
 # ==============================
 # Funciones de Comparacion
 # ==============================
 def compareTaxis(company1, company2):
-    if (lt.size(company1) == lt.size(company2)):
+    if (company1['value'] == company2['value']):
         return 0
-    elif lt.size(company1) > lt.size(company2):
+    elif company1['value'] > company2['value']:
         return 1
     else:
         return -1
 def compareTrips(trip1, trip2):
-    if (lt.size(trip1) == lt.size(trip2)):
+    if (trip1['value'] == trip2['value']):
         return 0
-    elif lt.size(trip1) > lt.size(trip2):
+    elif trip1['value'] > trip2['value']:
         return 1
     else:
         return -1
