@@ -122,30 +122,30 @@ def mejorHorario(analyzer, area1, area2, hora_inicio, hora_fin):    # Req. 3
     else:
         if inicio_M > 0 and inicio_M <= 15:
             inicio_M = '15'
-            inicio_H = str(inicio_H) + ':' + inicio_M
+            hora_inicio = str(inicio_H) + ':' + inicio_M
         elif inicio_M > 15 and inicio_M <= 30:    
             inicio_M = '30'
-            initialHour = str(inicio_H) + ':' + inicio_M
+            hora_inicio = str(inicio_H) + ':' + inicio_M
         elif inicio_M > 30 and inicio_M <= 45:
             inicio_M = '45'
-            initialHour = str(inicio_H) + ':' + inicio_M
+            hora_inicio = str(inicio_H) + ':' + inicio_M
         elif inicio_M > 45 and inicio_M <= 60:
             inicio_M = '00'
             inicio_H += 1
-            initialHour = str(inicio_H) + ':' + inicio_M
+            hora_inicio = str(inicio_H) + ':' + inicio_M
         if fin_M > 0 and fin_M <= 15:
             fin_M = '15'
-            fin_H = str(fin_H) + ':' + fin_M
+            hora_fin = str(fin_H) + ':' + fin_M
         elif fin_M > 15 and fin_M <= 30:    
             fin_M = '30'
-            initialHour = str(fin_H) + ':' + fin_M
+            hora_fin = str(fin_H) + ':' + fin_M
         elif fin_M > 30 and fin_M <= 45:
             fin_M = '45'
-            initialHour = str(fin_H) + ':' + fin_M
+            hora_fin = str(fin_H) + ':' + fin_M
         elif fin_M > 45 and fin_M <= 60:
             fin_M = '00'
             fin_H += 1
-            initialHour = str(fin_H) + ':' + fin_M
+            hora_fin = str(fin_H) + ':' + fin_M
         data = ctrl.mejorHorario(analyzer, area1, area2, hora_inicio, hora_fin)
 
 
