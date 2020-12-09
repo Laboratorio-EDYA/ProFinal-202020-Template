@@ -49,19 +49,19 @@ def newAnalyzer(size, loadfactor):
     analyzer['companyByTaxis'] = m.newMap(size,
                                         maptype = 'CHAINING',
                                         loadfactor = loadfactor,
-                                        comparefunction = compareTaxisIds)
+                                        comparefunction = compareTaxis)
     analyzer['companyByTrips'] = m.newMap(size,
                                         maptype = 'CHAINING',
                                         loadfactor = loadfactor,
-                                        comparefunction = compareTripsIds)
+                                        comparefunction = compareTrips)
     analyzer['datesByTaxis'] = om.newMap(maptype = 'RBT',
-                                        comparefunction = compareDatesIds)
-
+                                        comparefunction = compareDates)
     return analyzer
 
 def add(analyzer, actual):
     addTaxis(analyzer, actual)
     addTrips(analyzer, actual)
+    addDate(analyzer, actual)
 
 def addTaxis(analyzer, actual):
     current = m.get(analyzer['companyByTaxis'],actual['company'])
@@ -114,9 +114,11 @@ def addDate(analyzer, actual):
             total = value['value'][2] + 1
             puntos = (millas/money)*total
             om.put(current, actual['taxi_id'], [money,millas,total,puntos])
+
 # ==============================
 # Funciones de consulta
 # ==============================
+
 def accidentsSize(analyzer):
     """
     Número de libros en el catago
@@ -181,24 +183,24 @@ def
 # ==============================
 # Funciones de Comparacion
 # ==============================
-def compareTaxisIds(id1, id2):
-    if (id1 == id2):
+def compareTaxis(company1, company2):
+    if (lt.size(company1) == lt.size(company2)):
         return 0
-    elif id1 > id2:
+    elif lt.size(company1) > lt.size(company2):
         return 1
     else:
         return -1
-def compareTripsIds(trip1, trip2):
-    if (trip1 == trip2):
+def compareTrips(trip1, trip2):
+    if (lt.size(trip1) == lt.size(trip2)):
         return 0
-    elif trip1 > trip2:
+    elif lt.size(trip1) > lt.size(trip2):
         return 1
     else:
         return -1
-def compareDatesIds(date1, date2):
-    if (date1 == date2):
+def compareDates(date1, date2):
+    if (lt.size(date1) == lt.size(date2)):
         return 0
-    elif date1 > date2:
+    elif lt.size(date1) > lt.size(date2):
         return 1
     else:
         return -1
