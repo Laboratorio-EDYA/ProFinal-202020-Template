@@ -46,6 +46,8 @@ operación seleccionada.
 # ___________________________________________________
 
 taxifile = 'taxi-trips-wrvz-psew-subset-small.csv'
+initialStation = None
+recursionLimit = 30000
 
 # ___________________________________________________
 #  Menu principal
@@ -159,7 +161,7 @@ def main():
             print("\nInicializando.....")
             tamaño = int(input("Digita el tamaño de las tablas de hash: "))
             carga = float(input("Digita el factor de carga: "))
-            analyzer = controller.init(tamaño, carga)
+            analyzer = ctrl.init(tamaño, carga)
             cargaDatos(analyzer)
             t1_stop = process_time() #tiempo final
             print("Tiempo de ejecución ",t1_stop-t1_start," segundos ")
@@ -244,7 +246,7 @@ def main():
                 print('¡KELLY CARGUE EL ARCHIVO PRIMERO!')
             else:
                 t1_start = process_time() #tiempo inicial
-                mejorHorario(analyzer, area1, area2)
+                mejorHorario(analyzer, area1, area2, hora_inicio, hora_fin)
                 t1_stop = process_time() #tiempo final
                 print("Esta función se ejecutó en ",t1_stop-t1_start," segundos ")
         elif inputs == 5:   #Salir
