@@ -27,7 +27,7 @@
 
 import sys
 import config
-from App import controller
+from App import controller as ctrl
 from DISClib.ADT import stack
 import timeit
 assert config
@@ -81,8 +81,11 @@ def menu2():
 # ----------------------------
 
 # def totalTaxis(analyzer):
+#    data = ctrl.parteA1(analyzer)
 # def totalCompañias(analyzer):
+#     data = ctrl.parteA2(analyzer)
 # def topM(analyzer, name, top):
+#     
 # def topN(analyzer, name, top): 
 
 # ----------------------------
@@ -93,29 +96,53 @@ def menu2():
 # def puntosRango(analyzer, date1, date2, top):
 # Debe existir una funcion en el model que calcule los puntos de cada pinche taksi
 # ------------------------------------------------------
-# def mejorHorario(analyzer, area1, area2):    Req. 3
-"""if initialHourM < 15:
-            initialHourM = '00'
-            initialHour = str(initialHourH) + ':' + initialHourM
-        elif (initialHourM >= 15 and initialHourM <= 45) or initialHourM == 30:    
-            initialHourM = '30'
-            initialHour = str(initialHourH) + ':' + initialHourM
-        elif initialHourM <= 60:
-            initialHourM = '00'
-            initialHourH += 1
-            initialHour = str(initialHourH) + ':' + initialHourM
-        if finalHourM < 15:
-            finalHourM = '00'
-            finalHour = str(finalHourH) + ':' + finalHourM
-        elif (finalHourM >= 15 and finalHourM <= 45) or finalHourM == 30:
-            finalHourM = '30'
-            finalHour = str(finalHourH) + ':' + finalHourM
-        elif finalHourM <= 60:
-            finalHourM = '00'
-            finalHourH += 1
-            finalHour = str(finalHourH) + ':' + finalHourM"""
+def mejorHorario(analyzer, area1, area2, hora_inicio, hora_fin):    # Req. 3
+    hora_inicio = ''
+    hora_fin = ''
+    area1 = input('Digita el area comunitaria de inicio: ')
+    area2 = input('Digita el area comunitaria final: ')
+    inicio_H = int(input('Digita las horas de la hora inicial en formato HH: '))
+    inicio_M = int(input('Digita los minutos de la hora inicial en formato MM: '))
+    fin_H = int(input('Digita las horas de la hora final en formato HH: '))
+    fin_M = int(input('Digita los minutos de la hora final en formato MM: '))
+    if inicio_H > 60 or inicio_M > 24 or fin_H > 60 or fin_M > 24:
+        print('¡¡ KELLY, UNA HORA TIENE 60 MINUTOS Y UN DÍA 24 HORAS !!')
+    else:
+        if inicio_M > 0 and inicio_M <= 15:
+            inicio_M = '15'
+            inicio_H = str(inicio_H) + ':' + inicio_M
+        elif inicio_M > 15 and inicio_M <= 30:    
+            inicio_M = '30'
+            initialHour = str(inicio_H) + ':' + inicio_M
+        elif inicio_M > 30 and inicio_M <= 45:
+            inicio_M = '45'
+            initialHour = str(inicio_H) + ':' + inicio_M
+        elif inicio_M > 45 and inicio_M <= 60:
+            inicio_M = '00'
+            inicio_H += 1
+            initialHour = str(inicio_H) + ':' + inicio_M
+        if fin_M > 0 and fin_M <= 15:
+            fin_M = '15'
+            fin_H = str(fin_H) + ':' + fin_M
+        elif fin_M > 15 and fin_M <= 30:    
+            fin_M = '30'
+            initialHour = str(fin_H) + ':' + fin_M
+        elif fin_M > 30 and fin_M <= 45:
+            fin_M = '45'
+            initialHour = str(fin_H) + ':' + fin_M
+        elif fin_M > 45 and fin_M <= 60:
+            fin_M = '00'
+            fin_H += 1
+            initialHour = str(fin_H) + ':' + fin_M
+        data = ctrl.mejorHorario(analyzer, area1, area2, hora_inicio, hora_fin)
 
-# def cargarDatos(analyzer):
+
+def cargarDatos(analyzer):
+    print("\nCargando información de taxis de Chicago .....")
+    controller.loadFile(analyzer, taxifile)
+    print('El limite de recursion actual: ' + str(sys.getrecursionlimit()))
+    sys.setrecursionlimit(recursionLimit)
+    print('El limite de recursion se ajusta a: ' + str(recursionLimit))
 
 """
 Menu principal
@@ -129,10 +156,13 @@ def main():
         if inputs == 1:   #Inicio y carga
             t1_start = process_time() #tiempo inicial
             print("\nInicializando.....")
-            analyzer = controller.init()
-            # cargaDatos(analyzer)
+            tamaño = int(input("Digita el tamaño de las tablas de hash: "))
+            carga = float(input("Digita el factor de carga: "))
+            analyzer = controller.init(tamaño, carga)
+            cargaDatos(analyzer)
             t1_stop = process_time() #tiempo final
             print("Tiempo de ejecución ",t1_stop-t1_start," segundos ")
+
 
         elif inputs == 2:   #Req. 1
             if analyzer == None:
@@ -213,8 +243,6 @@ def main():
                 print('¡KELLY CARGUE EL ARCHIVO PRIMERO!')
             else:
                 t1_start = process_time() #tiempo inicial
-                area1 = input('Digita el area comunitaria de inicio: ')
-                area2 = input('Digita el area comunitaria final: ')
                 mejorHorario(analyzer, area1, area2)
                 t1_stop = process_time() #tiempo final
                 print("Esta función se ejecutó en ",t1_stop-t1_start," segundos ")
