@@ -142,7 +142,7 @@ def mejorHorario(analyzer, area1, area2, hora_inicio, hora_fin):    # Req. 3
 
 def cargarDatos(analyzer):
     print("\nCargando información de taxis de Chicago .....")
-    controller.loadFile(analyzer, taxifile)
+    ctrl.loadData(analyzer, taxifile)
     print('El limite de recursion actual: ' + str(sys.getrecursionlimit()))
     sys.setrecursionlimit(recursionLimit)
     print('El limite de recursion se ajusta a: ' + str(recursionLimit))
@@ -162,7 +162,7 @@ def main():
             tamaño = int(input("Digita el tamaño de las tablas de hash: "))
             carga = float(input("Digita el factor de carga: "))
             analyzer = ctrl.init(tamaño, carga)
-            cargaDatos(analyzer)
+            cargarDatos(analyzer)
             t1_stop = process_time() #tiempo final
             print("Tiempo de ejecución ",t1_stop-t1_start," segundos ")
 
