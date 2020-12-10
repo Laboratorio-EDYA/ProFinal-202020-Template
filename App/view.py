@@ -84,12 +84,22 @@ def menu2():
 # ----------------------------
 
 # def totalTaxis(analyzer):
-#    data = ctrl.parteA1(analyzer)
+#    data = ctrl.parteA1(analyzer)}
+#    print(data, ' taxis tienen servicios reportados')
 # def totalCompañias(analyzer):
 #     data = ctrl.parteA2(analyzer)
-# def topM(analyzer, name, top):
-#     
-# def topN(analyzer, name, top): 
+#     print(data,' compañías tiene al menos un taxi inscrito')
+# def topM(analyzer, top):
+#     res = []    
+#     data = ctrl.parteA3(analyzer)
+#     for each_data in data:
+#          res.append(each_data)
+#          if len(res) > top:
+#              break
+#     print('El top ',top,' de las compañías ordenadas por taxis afiliados es: ')
+#     for each_data in res:
+#         print(str(each_data))
+# def topN(analyzer, top): 
 
 # ----------------------------
 #     funciones menu 2
@@ -113,30 +123,30 @@ def mejorHorario(analyzer, area1, area2, hora_inicio, hora_fin):    # Req. 3
     else:
         if inicio_M > 0 and inicio_M <= 15:
             inicio_M = '15'
-            inicio_H = str(inicio_H) + ':' + inicio_M
+            hora_inicio = str(inicio_H) + ':' + inicio_M
         elif inicio_M > 15 and inicio_M <= 30:    
             inicio_M = '30'
-            initialHour = str(inicio_H) + ':' + inicio_M
+            hora_inicio = str(inicio_H) + ':' + inicio_M
         elif inicio_M > 30 and inicio_M <= 45:
             inicio_M = '45'
-            initialHour = str(inicio_H) + ':' + inicio_M
+            hora_inicio = str(inicio_H) + ':' + inicio_M
         elif inicio_M > 45 and inicio_M <= 60:
             inicio_M = '00'
             inicio_H += 1
-            initialHour = str(inicio_H) + ':' + inicio_M
+            hora_inicio = str(inicio_H) + ':' + inicio_M
         if fin_M > 0 and fin_M <= 15:
             fin_M = '15'
-            fin_H = str(fin_H) + ':' + fin_M
+            hora_fin = str(fin_H) + ':' + fin_M
         elif fin_M > 15 and fin_M <= 30:    
             fin_M = '30'
-            initialHour = str(fin_H) + ':' + fin_M
+            hora_fin = str(fin_H) + ':' + fin_M
         elif fin_M > 30 and fin_M <= 45:
             fin_M = '45'
-            initialHour = str(fin_H) + ':' + fin_M
+            hora_fin = str(fin_H) + ':' + fin_M
         elif fin_M > 45 and fin_M <= 60:
             fin_M = '00'
             fin_H += 1
-            initialHour = str(fin_H) + ':' + fin_M
+            hora_fin = str(fin_H) + ':' + fin_M
         data = ctrl.mejorHorario(analyzer, area1, area2, hora_inicio, hora_fin)
 
 
