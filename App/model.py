@@ -75,7 +75,11 @@ def add(analyzer, actual):
     addCommunity(analyzer, actual)
 
 def addTaxis(analyzer, actual):
-    current = m.get(analyzer['companyByTaxis'],actual['company'])
+    if actual['company'] == '':
+        company = 'Independent Owner'
+    else:
+        company = actual['company']
+    current = m.get(analyzer['companyByTaxis'],company)
     if current is None:
         mapa = m.newMap(comparefunction=compareTaxis)
         m.put(analyzer['companyByTaxis'],actual['company'],mapa)
@@ -89,7 +93,11 @@ def addTaxis(analyzer, actual):
             m.put(current['value'], actual['taxi_id'], value['value'] + 1)
 
 def addTrips(analyzer, actual):
-    current = m.get(analyzer['companyByTrips'],actual['company'])
+    if actual['company'] == '':
+        company = 'Independent Owner'
+    else:
+        company = actual['company']
+    current = m.get(analyzer['companyByTrips'],company)
     if current is None:
         mapa = m.newMap(comparefunction=compareTrips)
         m.put(analyzer['companyByTrips'],actual['company'],mapa)
@@ -158,7 +166,7 @@ def addVertex(analyzer,vertex):
         if not gr.containsVertex(analyzer['graph'],vertex):
             gr.insertVertex(analyzer['graph'], vertex)
         return analyzer
-    except Excveption as exp:
+    except Exception as exp:
         error.reraise(exp, 'model:addVertex')
 
 def addConnection(analyzer, origin, destination, duration):
@@ -249,14 +257,6 @@ def mostTaxis(analyzer):
         key=it.next(iterator)
         value=m.get(analyzer['datesByTaxis'], key)
 
-        
-
-        
-
-
-
-
-
 def parteA1(analyzer):
     answer = 0
     companies = m.keySet(analyzer['companyByTaxis'])
@@ -265,6 +265,7 @@ def parteA1(analyzer):
         company = it.next(iterator)
         value = m.get(analyzer['companyByTaxis'], company)['value']
         answer += m.size(value)
+    return answer
 
 def parteA2(analyzer):
     answer = 0
