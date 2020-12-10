@@ -82,12 +82,15 @@ def menu2():
 # ----------------------------
 #     funciones menu 1
 # ----------------------------
+
 def totalTaxis(analyzer):
     data = ctrl.parteA1(analyzer)
     print(data, ' taxis tienen servicios reportados')
+    
 def totalCompañias(analyzer):
     data = ctrl.parteA2(analyzer)
     print(data,' compañías tiene al menos un taxi inscrito')
+    
 def topM(analyzer, top):
     res = []    
     data = ctrl.parteA3(analyzer)

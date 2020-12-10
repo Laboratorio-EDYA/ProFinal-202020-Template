@@ -122,4 +122,5 @@ def parteA4(analyzer, top):
 # def puntosRango(analyzer, date1, date2, top):
 # Debe existir una funcion en el model que calcule los puntos de cada pinche taksi
 # ------------------------------------------------------
-# def mejorHorario(analyzer, area1, area2, hora_inicio, hora_fin):    Req. 3
+def mejorHorario(analyzer, area1, area2, hora_inicio, hora_fin):
+    return model.mejorHorario(analyzer, area1, area2, hora_inicio, hora_fin)
