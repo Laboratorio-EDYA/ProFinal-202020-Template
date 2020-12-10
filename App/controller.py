@@ -105,11 +105,11 @@ def parteA1(analyzer):
 def parteA2(analyzer):
     return model.parteA2(analyzer)
 
-def parteA3(analyzer, top):
-    return model.parteA3(analyzer, top)
+def parteA3(analyzer):
+    return model.parteA3(analyzer)
 
-def parteA4(analyzer, top): 
-    return model.parteA4(analyzer, top)
+def parteA4(analyzer): 
+    return model.parteA4(analyzer)
 
 #datetime.datetime.strptime(hora,'%Y-%m-%d')
 #datetime.datetime.strptime(hora,'%H:%M')
