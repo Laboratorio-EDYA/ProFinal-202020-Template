@@ -32,6 +32,7 @@ from DISClib.ADT import stack
 import timeit
 assert config
 from time import process_time
+import controller
 
 """
 La vista se encarga de la interacción con el usuario.
@@ -83,22 +84,24 @@ def menu2():
 # ----------------------------
 
 def totalTaxis(analyzer):
-   data = ctrl.parteA1(analyzer)}
-   print(data, ' taxis tienen servicios reportados')
+    data = ctrl.parteA1(analyzer)
+    print(data, ' taxis tienen servicios reportados')
+    
 def totalCompañias(analyzer):
     data = ctrl.parteA2(analyzer)
     print(data,' compañías tiene al menos un taxi inscrito')
+    
 def topM(analyzer, top):
     res = []    
     data = ctrl.parteA3(analyzer)
     for each_data in data:
-         res.append(each_data)
-         if len(res) > top:
-             break
+        res.append(each_data)
+        if len(res) > top:
+            break
     print('El top ',top,' de las compañías ordenadas por taxis afiliados es: ')
     for each_data in res:
         print(str(each_data))
-#def topN(analyzer, top): 
+# def topN(analyzer, top): 
 
 # ----------------------------
 #     funciones menu 2
@@ -151,7 +154,7 @@ def mejorHorario(analyzer, area1, area2, hora_inicio, hora_fin):    # Req. 3
 
 def cargarDatos(analyzer):
     print("\nCargando información de taxis de Chicago .....")
-    ctrl.loadFile(analyzer, taxifile)
+    ctrl.loadData(analyzer, taxifile)
     print('El limite de recursion actual: ' + str(sys.getrecursionlimit()))
     sys.setrecursionlimit(recursionLimit)
     print('El limite de recursion se ajusta a: ' + str(recursionLimit))
@@ -171,7 +174,7 @@ def main():
             tamaño = int(input("Digita el tamaño de las tablas de hash: "))
             carga = float(input("Digita el factor de carga: "))
             analyzer = ctrl.init(tamaño, carga)
-            cargaDatos(analyzer)
+            cargarDatos(analyzer)
             t1_stop = process_time() #tiempo final
             print("Tiempo de ejecución ",t1_stop-t1_start," segundos ")
 

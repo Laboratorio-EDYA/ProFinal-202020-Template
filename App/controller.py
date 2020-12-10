@@ -39,12 +39,12 @@ recae sobre el controlador.
 # ___________________________________________________
 #  Inicializacion del catalogo
 # ___________________________________________________
-def init():
+def init(tamaño, carga):
     """
     Llama la funcion de inicializacion  del modelo.
     """
     # catalog es utilizado para interactuar con el modelo
-    analyzer = model.newAnalyzer()
+    analyzer = model.newAnalyzer(tamaño, carga)
     return analyzer
 
 
@@ -110,6 +110,9 @@ def parteA3(analyzer, top):
 
 def parteA4(analyzer, top): 
     return model.parteA4(analyzer, top)
+
+#datetime.datetime.strptime(hora,'%Y-%m-%d')
+#datetime.datetime.strptime(hora,'%H:%M')
 
 # ----------------------------
 #     funciones menu 2
