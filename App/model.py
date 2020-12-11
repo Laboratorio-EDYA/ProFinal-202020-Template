@@ -32,6 +32,7 @@ from DISClib.Algorithms.Graphs import scc
 from DISClib.Algorithms.Graphs import dijsktra as djk
 from DISClib.Utils import error as error
 from DISClib.ADT import orderedmap as om
+import operator as o 
 
 import datetime 
 
@@ -249,14 +250,6 @@ def gradosAkilometros2(x):
 # Requerimientosta
 # ==============================
 
-def mostTaxis(analyzer):
-    dates = m.keySet(analyzer['datesByTaxis'])
-    iterator=it.newIterator(dates)
-    Max=0
-    while it.hasNext(iterator):
-        key=it.next(iterator)
-        value=m.get(analyzer['datesByTaxis'], key)
-
 def parteA1(analyzer):
     answer = 0
     companies = m.keySet(analyzer['companyByTaxis'])
@@ -305,6 +298,39 @@ def parteA4(analyzer):
     ms.mergesort(lista, compareTripsValues)
     return lista
 
+def parteB1(analyzer,fecha,top):
+    taxisbyDate=om.get(analyzer['datesByTaxis'],fecha)
+    mapValue=taxisbyDate['value']
+    mapValueKeys=m.keySet(mapValue) #lista de todos los taxis ids
+    iterator=it.newIterator(mapValueKeys)
+    dictRes={}
+    while it.newIterator(iterator):
+        key=it.next(iterator)
+        value=m.get(mapValue,key)['value']
+        dictRes[key]=value[3]
+    sortedRes=sorted(dictRes.items(), key=o.itemgetter(1),reverse=True) #lista de tuplas
+    listMost=lt.newList()
+    for i in range(top):
+        lt.addLast(listMost,sortedRes[i][0])
+    return listMost #lista con los ids
+
+def parteB2(analyzer,keylo,keyhi,top):
+    keys=om.keys(analyzer['datesByTaxis'],keylo,keyhi)
+    iterator=it.newIterator(keys)
+    dictRes={}
+    while it.hasNext(iterator):
+        key=it.next(iterator)
+        value=m.get(analyzer['datesByTaxis'],key)['value']
+        dictRes[key]=value
+    sortedRes=sorted(dictRes.items(),key=o.itemgetter(1),reverse=True) #lista de tuplas
+    listMost=lt.newList()
+    for i in range(top):
+        lt.addLast(listMost,sortedRes[i][0])
+    return listMost #lista de los ids
+""" 
+def parteC1():
+def parteC2():
+"""
 
 # ==============================
 # Funciones de Comparacion
