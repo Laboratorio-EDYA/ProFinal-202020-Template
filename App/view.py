@@ -54,51 +54,70 @@ recursionLimit = 30000
 # ___________________________________________________
 def printMenu():
     print('\n')
-    print('-'*80)
+    print('='*80)
     print('Bienvenido')
     print('1- Inicializar analizador y cargar archivo CSV')
     print('2- Reporte de infomación de compañías y taxis')
     print('3- Sistemas de puntos y premios a taxis')
     print('4- Consultar el mejor horario entre 2 areas comunitarias')
     print('5- Salir')
-    print('-'*80)
+    print('='*80)
 
 def menu1():
     print('\n')
+    print('-'*80)
     print('Reporte de infomación de compañías y taxis')
     print('1- Número total de taxis en los servicios')
     print('2- Número total de compañías con al menos un taxi inscrito')
     print('3- Top M compañías ordenadas por cantidad de taxis afiliados')
     print('4- Top N compañías que prestaron más servicios')
     print('5- Volver al menú principal')
+    print('-'*80)
 
 def menu2():
     print('\n')
+    print('-'*80)
     print('Sistemas de puntos y premios a taxis')
     print('1- Identificar los N taxis con más puntos en una fecha')
     print('2- Identificar los M taxis con más puntos en un rango de fechas')
     print('3- Volver al menú principal')
+    print('-'*80)
 
 # ----------------------------
 #     funciones menu 1
 # ----------------------------
+
 def totalTaxis(analyzer):
     data = ctrl.parteA1(analyzer)
     print(data, ' taxis tienen servicios reportados')
+    
 def totalCompañias(analyzer):
     data = ctrl.parteA2(analyzer)
     print(data,' compañías tiene al menos un taxi inscrito')
+    
 def topM(analyzer, top):
     res = []    
     data = ctrl.parteA3(analyzer)
+    print(data)
     for each_data in data:
         res.append(each_data)
-        if len(res) > top:
+        if len(res) >= top:
             break
     print('El top ',top,' de las compañías ordenadas por taxis afiliados es: ')
     for each_data in res:
         print(str(each_data))
-# def topN(analyzer, top): 
+
+def topN(analyzer, top): 
+    res = []    
+    data = ctrl.parteA3(analyzer)
+    print(data)
+    for each_data in data:
+        res.append(each_data)
+        if len(res) >= top:
+            break
+    print('El top ',top,' de las compañías que más servicios prestaron es: ')
+    for each_data in res:
+        print(str(each_data))
 
 # ----------------------------
 #     funciones menu 2
@@ -195,16 +214,14 @@ def main():
                         print("Esta función se ejecutó en ",t1_stop-t1_start," segundos ")
                     elif opcion == 3:
                         t1_start = process_time() #tiempo inicial
-                        name = input('Digita el nombre de la compañía: ')
                         top = int(input('Digita el top límite: '))
-                        topM(analyzer, name, top)
+                        topM(analyzer, top)
                         t1_stop = process_time() #tiempo final
                         print("Esta función se ejecutó en ",t1_stop-t1_start," segundos ")
                     elif opcion == 4:
                         t1_start = process_time() #tiempo inicial
-                        name = input('Digita el nombre de la compañía: ')
                         top = int(input('Digita el top límite: '))
-                        topN(analyzer, name, top)
+                        topN(analyzer, top)
                         t1_stop = process_time() #tiempo final
                         print("Esta función se ejecutó en ",t1_stop-t1_start," segundos ")
                     elif opcion == 5:
