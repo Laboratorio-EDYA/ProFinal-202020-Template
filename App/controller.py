@@ -112,14 +112,14 @@ def parteA3(analyzer):
 def parteA4(analyzer, top): 
     return model.parteA4(analyzer, top)
 
-def parteB1(analyzer,fecha,top):
-    fecha=datetime.datetime.strptime(fecha,'%Y-%m-%d')
-    return model.parteB1(analyzer,fecha.date(),top)
+def parteB1(analyzer,top,fecha):
+    fech=datetime.datetime.strptime(fecha,'%Y-%m-%d').date()
+    return model.parteB1(analyzer,top,fech)
 
 def parteB2(analyzer, keylo,keyhi,top):
-    keyl=datetime.datetime.strptime(keylo,'%Y-%m-%d')
-    keyh=datetime.datetime.strptime(keyhi,'%Y-%m-%d')
-    return model.parteB2(analyzer,keyl.date(),keyh.date(),top)
+    keyl=datetime.datetime.strptime(keylo,'%Y-%m-%d').date()
+    keyh=datetime.datetime.strptime(keyhi,'%Y-%m-%d').date()
+    return model.parteB2(analyzer,keyl,keyh,top)
 
   
 #datetime.datetime.strptime(hora,'%Y-%m-%d')
