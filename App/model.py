@@ -319,55 +319,41 @@ def parteA4(analyzer):
     return lista
 
 def parteB1(analyzer,top,fecha):
-    mapTaxis=om.get(analyzer['datesByTaxis'],fecha)
-    taxis=m.keySet(mapTaxis['value'])
-    iterator=it.newIterator(taxis)
-    dictRes={}
+    mapTaxis = om.get(analyzer['datesByTaxis'],fecha)
+    taxis = m.keySet(mapTaxis['value'])
+    iterator = it.newIterator(taxis)
+    dictRes = {}
     while it.hasNext(iterator):
-        taxi=it.next(iterator)
-        value=m.get(mapTaxis['value'],taxi)['value']
-        puntos=value[3]
-        dictRes[taxi]=puntos
-    sortedDict=sorted(dictRes.items(), key=o.itemgetter(1),reverse=True)
-    listIds=lt.newList()
+        taxi = it.next(iterator)
+        value = m.get(mapTaxis['value'],taxi)['value']
+        puntos = value[3]
+        dictRes[taxi] = puntos
+    sortedDict = sorted(dictRes.items(), key = o.itemgetter(1), reverse = True)
+    listIds = lt.newList()
     for i in range(top):
-        lt.addLast(listIds,sortedDict[i][0])
+        lt.addLast(listIds,sortedDict[i])
     return listIds
 
 def parteB2(analyzer,keylo,keyhi,top):
-    dates=om.keys(analyzer['datesByTaxis'],keylo,keyhi)
-    iterator=it.newIterator(dates)
-    dictRes={}
+    dates = om.keys(analyzer['datesByTaxis'],keylo,keyhi)
+    iterator = it.newIterator(dates)
+    dictRes = {}
     while it.hasNext(iterator):
-        date=it.next(iterator)
-        mapTaxis=om.get(analyzer['datesByTaxis'],date)['value'] #map
-        taxis=m.keySet(mapTaxis)
-        iterator2=it.newIterator(taxis)
+        date = it.next(iterator)
+        mapTaxis = om.get(analyzer['datesByTaxis'],date)['value'] #map
+        taxis = m.keySet(mapTaxis)
+        iterator2 = it.newIterator(taxis)
         while it.hasNext(iterator2):
-            taxi=it.next(iterator2)
-            value=m.get(mapTaxis,taxi)['value']
-            puntos=value[3]
-            dictRes[taxi]=puntos
-    sortedDict=sorted(dictRes.items(), key=o.itemgetter(1),reverse=True)
-    listIds=lt.newList()
+            taxi = it.next(iterator2)
+            value = m.get(mapTaxis,taxi)['value']
+            puntos = value[3]
+            dictRes[taxi] = puntos
+    sortedDict = sorted(dictRes.items(), key = o.itemgetter(1), reverse = True)
+    listIds = lt.newList()
     for i in range(top):
         lt.addLast(listIds,sortedDict[i][0])
     return listIds
-
-
         
-        
-            
-
-
-
-    
-
-            
-
-        
-
-
 
 """ 
 def parteC(analyzer, area1, area2, hora_inicio, hora_fin):
