@@ -33,7 +33,6 @@ from DISClib.Algorithms.Graphs import dijsktra as djk
 from DISClib.Utils import error as error
 from DISClib.ADT import orderedmap as om
 import operator as o 
-
 import datetime 
 
 from DISClib.Algorithms.Sorting import mergesort as ms
@@ -112,11 +111,12 @@ def addTrips(analyzer, actual):
             m.put(current['value'], actual['trip_id'], value['value'] + 1)
 
 def addDate(analyzer, actual):
-    current = om.get(analyzer['datesByTaxis'], actual['trip_start_timestamp'])
+    date=getDateTimeTaxiTrip(actual)[0]
+    current = om.get(analyzer['datesByTaxis'], date)
     if current is None:
         mapa = m.newMap(comparefunction=compareDatesValues)
-        om.put(analyzer['datesByTaxis'],actual['trip_start_timestamp'],mapa)
-        current = om.get(analyzer['datesByTaxis'],actual['trip_start_timestamp'])['value']
+        om.put(analyzer['datesByTaxis'],date,mapa)
+        current = om.get(analyzer['datesByTaxis'],date)['value']
         money = float(actual['trip_total'])
         millas = float(actual['trip_miles'])
         if money > 0:
@@ -245,6 +245,26 @@ def gradosAkilometros2(x):
         return str(a[0])+'.'+str(a[1])+str(a[2])
     except:
         return str(a[0])+'.'+str(a[1])    
+def getDateTimeTaxiTrip(taxitrip):
+
+    """
+
+    Recibe la informacion de un servicio de taxi leido del archivo de datos (parametro).
+
+    Retorna de forma separada la fecha (date) y el tiempo (time) del dato 'trip_start_timestamp'
+
+    Los datos date se pueden comparar con <, >, <=, >=, ==, !=
+
+    Los datos time se pueden comparar con <, >, <=, >=, ==, !=
+
+    """
+
+    tripstartdate = taxitrip['trip_start_timestamp']
+
+    taxitripdatetime = datetime.datetime.strptime(tripstartdate, '%Y-%m-%dT%H:%M:%S.%f')
+
+    return taxitripdatetime.date(), taxitripdatetime.time()
+
 
 # ==============================
 # Requerimientosta
@@ -298,37 +318,57 @@ def parteA4(analyzer):
     ms.mergesort(lista, compareTripsValues)
     return lista
 
-def parteB1(analyzer,fecha,top):
-    taxisbyDate=om.get(analyzer['datesByTaxis'],fecha)
-    mapValue=taxisbyDate['value']
-    mapValueKeys=m.keySet(mapValue) #lista de todos los taxis ids
-    iterator=it.newIterator(mapValueKeys)
-    dictRes={}
-    while it.newIterator(iterator):
-        key=it.next(iterator)
-        value=m.get(mapValue,key)['value']
-        dictRes[key]=value[3]
-    sortedRes=sorted(dictRes.items(), key=o.itemgetter(1),reverse=True) #lista de tuplas
-    listMost=lt.newList()
-    for i in range(top):
-        lt.addLast(listMost,sortedRes[i][0])
-    print(listMost)
-    return listMost #lista con los ids
-
-def parteB2(analyzer,keylo,keyhi,top):
-    keys=om.keys(analyzer['datesByTaxis'],keylo,keyhi)
-    iterator=it.newIterator(keys)
+def parteB1(analyzer,top,fecha):
+    mapTaxis=om.get(analyzer['datesByTaxis'],fecha)
+    taxis=m.keySet(mapTaxis['value'])
+    iterator=it.newIterator(taxis)
     dictRes={}
     while it.hasNext(iterator):
-        key=it.next(iterator)
-        value=m.get(analyzer['datesByTaxis'],key)['value']
-        dictRes[key]=value
-    sortedRes=sorted(dictRes.items(),key=o.itemgetter(1),reverse=True) #lista de tuplas
-    listMost=lt.newList()
+        taxi=it.next(iterator)
+        value=m.get(mapTaxis['value'],taxi)['value']
+        puntos=value[3]
+        dictRes[taxi]=puntos
+    sortedDict=sorted(dictRes.items(), key=o.itemgetter(1),reverse=True)
+    listIds=lt.newList()
     for i in range(top):
-        lt.addLast(listMost,sortedRes[i][0])
-    print(listMost)
-    return listMost #lista de los ids
+        lt.addLast(listIds,sortedDict[i][0])
+    return listIds
+
+def parteB2(analyzer,keylo,keyhi,top):
+    dates=om.keys(analyzer['datesByTaxis'],keylo,keyhi)
+    iterator=it.newIterator(dates)
+    dictRes={}
+    while it.hasNext(iterator):
+        date=it.next(iterator)
+        mapTaxis=om.get(analyzer['datesByTaxis'],date)['value'] #map
+        taxis=m.keySet(mapTaxis)
+        iterator2=it.newIterator(taxis)
+        while it.hasNext(iterator2):
+            taxi=it.next(iterator2)
+            value=m.get(mapTaxis,taxi)['value']
+            puntos=value[3]
+            dictRes[taxi]=puntos
+    sortedDict=sorted(dictRes.items(), key=o.itemgetter(1),reverse=True)
+    listIds=lt.newList()
+    for i in range(top):
+        lt.addLast(listIds,sortedDict[i][0])
+    return listIds
+
+
+        
+        
+            
+
+
+
+    
+
+            
+
+        
+
+
+
 """ 
 def parteC(analyzer, area1, area2, hora_inicio, hora_fin):
 """
@@ -369,13 +409,13 @@ def compareTrips(company1, company2):
         return -1
 
 def compareDates(date1, date2):
+    
     if date1 == date2:
         return 0
     elif date1 > date2:
         return 1
     else:
         return -1
-
 def compareDatesValues(date1, date2):
     if date1 == date2['key']:
         return 0

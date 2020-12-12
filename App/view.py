@@ -33,6 +33,7 @@ import timeit
 assert config
 from time import process_time
 import controller
+from DISClib.DataStructures import listiterator as it
 
 """
 La vista se encarga de la interacción con el usuario.
@@ -123,15 +124,32 @@ def topN(analyzer, top):
 #     funciones menu 2
 # ----------------------------
 
-def puntosFecha(analyzer, date, top):
-    data = ctrl.parteB1(analyzer, date, top)
-    print(data)
-
+def puntosFecha(analyzer, top, fecha):
+    data = ctrl.parteB1(analyzer, top,fecha)
+    iterator=it.newIterator(data)
+    i=1
+    
+    print('Los taxis con más puntos según la fecha dada son: ' )
+    print('='*50)
+    while it.hasNext(iterator):
+        print(str(i)+'->','El taxi con la identificación: ',it.next(iterator))
+        i+=1
+    print('-'*50)
 
 def puntosRango(analyzer, date1, date2, top):
     data = ctrl.parteB2(analyzer, date1, date2, top)
-    print(data)
+    iterator=it.newIterator(data)
+    print('Los taxis con más puntos según el rango de fechas',date1,' y ',date2)
+    print('='*50)
+    i=1
+    while it.hasNext(iterator):
+        print(str(i)+'->','El taxi con la identificación: ',it.next(iterator))
+        i+=1
+    print('='*50)
 # Debe existir una funcion en el model que calcule los puntos de cada pinche taksi
+"""
+El addDate añade cada fecha junto con un taxi y sus puntos, millas y entre otros
+"""
 # ------------------------------------------------------
 def mejorHorario(analyzer):    # Req. 3
     hora_inicio = ''
@@ -242,13 +260,12 @@ def main():
                     opcion = int(input('Selecciona una opción para continuar\n--> '))
                     if opcion == 1:
                         t1_start = process_time() #tiempo inicial
-                        print('Digita la fecha de busqueda con formato YYYY-MM-DD')
-                        year = input('Año: ')
-                        month = input('Mes: ')
-                        day = input('Dia: ')
-                        date = year + '-' + month + '-' + day
+                        year1 = input('Año: ')
+                        month1 = input('Mes: ')
+                        day1 = input('Dia: ')
+                        date1 = year1 + '-' + month1 + '-' + day1
                         top = int(input('Digita el top límite: '))
-                        puntosFecha(analyzer, date, top)
+                        puntosFecha(analyzer, top, date1)
                         t1_stop = process_time() #tiempo final
                         print("Esta función se ejecutó en ",t1_stop-t1_start," segundos ")
                     elif opcion == 2:
