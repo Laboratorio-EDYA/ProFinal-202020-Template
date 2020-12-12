@@ -312,6 +312,7 @@ def parteB1(analyzer,fecha,top):
     listMost=lt.newList()
     for i in range(top):
         lt.addLast(listMost,sortedRes[i][0])
+    print(listMost)
     return listMost #lista con los ids
 
 def parteB2(analyzer,keylo,keyhi,top):
@@ -326,6 +327,7 @@ def parteB2(analyzer,keylo,keyhi,top):
     listMost=lt.newList()
     for i in range(top):
         lt.addLast(listMost,sortedRes[i][0])
+    print(listMost)
     return listMost #lista de los ids
 """ 
 def parteC1():

@@ -123,11 +123,17 @@ def topN(analyzer, top):
 #     funciones menu 2
 # ----------------------------
 
-# def puntosFecha(analyzer, date, top):
-# def puntosRango(analyzer, date1, date2, top):
+def puntosFecha(analyzer, date, top):
+    data = controller.puntosFecha(analyzer, date, top)
+    print(data)
+
+
+def puntosRango(analyzer, date1, date2, top):
+    data = controller.puntosRango(analyzer, date1, date2, top)
+    print(data)
 # Debe existir una funcion en el model que calcule los puntos de cada pinche taksi
 # ------------------------------------------------------
-def mejorHorario(analyzer, area1, area2, hora_inicio, hora_fin):    # Req. 3
+def mejorHorario(analyzer):    # Req. 3
     hora_inicio = ''
     hora_fin = ''
     area1 = input('Digita el area comunitaria de inicio: ')
@@ -136,7 +142,7 @@ def mejorHorario(analyzer, area1, area2, hora_inicio, hora_fin):    # Req. 3
     inicio_M = int(input('Digita los minutos de la hora inicial en formato MM: '))
     fin_H = int(input('Digita las horas de la hora final en formato HH: '))
     fin_M = int(input('Digita los minutos de la hora final en formato MM: '))
-    if inicio_H > 60 or inicio_M > 24 or fin_H > 60 or fin_M > 24:
+    if inicio_M > 60 or inicio_H > 24 or fin_M > 60 or fin_H > 24:
         print('¡¡ KELLY, UNA HORA TIENE 60 MINUTOS Y UN DÍA 24 HORAS !!')
     else:
         if inicio_M > 0 and inicio_M <= 15:
@@ -166,6 +172,7 @@ def mejorHorario(analyzer, area1, area2, hora_inicio, hora_fin):    # Req. 3
             fin_H += 1
             hora_fin = str(fin_H) + ':' + fin_M
         data = ctrl.mejorHorario(analyzer, area1, area2, hora_inicio, hora_fin)
+    print(data)
 
 
 def cargarDatos(analyzer):
@@ -175,12 +182,10 @@ def cargarDatos(analyzer):
     sys.setrecursionlimit(recursionLimit)
     print('El limite de recursion se ajusta a: ' + str(recursionLimit))
 
-"""
-Menu principal
-"""
+# Menú principal
 
 def main():
-    analyzer = True
+    analyzer = None
     while True:
         printMenu()
         inputs = int(input('Selecciona una opción para continuar\n-> '))
@@ -193,7 +198,6 @@ def main():
             cargarDatos(analyzer)
             t1_stop = process_time() #tiempo final
             print("Tiempo de ejecución ",t1_stop-t1_start," segundos ")
-
 
         elif inputs == 2:   #Req. 1
             if analyzer == None:
@@ -260,24 +264,28 @@ def main():
                         day2 = input('Dia: ')
                         date2 = year2 + '-' + month2 + '-' + day2
                         top = int(input('Digita el top límite: '))
-                        puntosRango(analyzer, date, top)
+                        puntosRango(analyzer, date1, date2, top)
                         t1_stop = process_time() #tiempo final
                         print("Esta función se ejecutó en ",t1_stop-t1_start," segundos ")
                     elif opcion == 3:
                         break
                     else:
                         print('Opcion invalida .....')
+
         elif inputs == 4:
             if analyzer == None:
                 print('¡KELLY CARGUE EL ARCHIVO PRIMERO!')
             else:
                 t1_start = process_time() #tiempo inicial
-                mejorHorario(analyzer, area1, area2, hora_inicio, hora_fin)
+                mejorHorario(analyzer)
                 t1_stop = process_time() #tiempo final
                 print("Esta función se ejecutó en ",t1_stop-t1_start," segundos ")
+
         elif inputs == 5:   #Salir
             print('Cerrando el programa ...')
             sys.exit(0)
+
         else:
             print('Opción incorrecta .....')
+            
 main()
