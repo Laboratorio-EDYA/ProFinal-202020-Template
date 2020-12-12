@@ -125,31 +125,25 @@ def topN(analyzer, top):
 # ----------------------------
 
 def puntosFecha(analyzer, top, fecha):
-    data = ctrl.parteB1(analyzer, top,fecha)
-    iterator=it.newIterator(data)
-    i=1
-    
-    print('Los taxis con más puntos según la fecha dada son: ' )
-    print('='*50)
+    data = ctrl.parteB1(analyzer, top, fecha)
+    i = 1
+    iterator = it.newIterator(data)
+    print('El top ', top,' de taxis con más puntos según la fecha dada son: ' )
     while it.hasNext(iterator):
-        print(str(i)+'->','El taxi con la identificación: ',it.next(iterator))
-        i+=1
-    print('-'*50)
+        print(str(i)+'. Taxi ID: ',it.next(iterator))
+        i += 1
 
 def puntosRango(analyzer, date1, date2, top):
     data = ctrl.parteB2(analyzer, date1, date2, top)
     iterator=it.newIterator(data)
-    print('Los taxis con más puntos según el rango de fechas',date1,' y ',date2)
-    print('='*50)
-    i=1
+    print('El top ', top,' de taxis con más puntos según el rango de fechas ',date1,' y ',date2, ' son: ')
+    i = 1
     while it.hasNext(iterator):
-        print(str(i)+'->','El taxi con la identificación: ',it.next(iterator))
-        i+=1
-    print('='*50)
-# Debe existir una funcion en el model que calcule los puntos de cada pinche taksi
-"""
-El addDate añade cada fecha junto con un taxi y sus puntos, millas y entre otros
-"""
+        print(str(i)+'. Taxi ID: ',it.next(iterator))
+        i += 1
+
+# El addDate añade cada fecha junto con un taxi y sus puntos, millas y entre otros
+
 # ------------------------------------------------------
 def mejorHorario(analyzer):    # Req. 3
     hora_inicio = ''
@@ -189,7 +183,7 @@ def mejorHorario(analyzer):    # Req. 3
             fin_M = '00'
             fin_H += 1
             hora_fin = str(fin_H) + ':' + fin_M
-        data = ctrl.mejorHorario(analyzer, area1, area2, hora_inicio, hora_fin)
+        data = ctrl.parteC(analyzer, area1, area2, hora_inicio, hora_fin)
     print(data)
 
 

@@ -112,24 +112,18 @@ def parteA3(analyzer):
 def parteA4(analyzer, top): 
     return model.parteA4(analyzer, top)
 
-def parteB1(analyzer,top,fecha):
-    fech=datetime.datetime.strptime(fecha,'%Y-%m-%d').date()
-    return model.parteB1(analyzer,top,fech)
+def parteB1(analyzer, top, fecha):
+    fecha = datetime.datetime.strptime(fecha,'%Y-%m-%d').date()
+    return model.parteB1(analyzer, top, fecha)
 
-def parteB2(analyzer, keylo,keyhi,top):
-    keyl=datetime.datetime.strptime(keylo,'%Y-%m-%d').date()
-    keyh=datetime.datetime.strptime(keyhi,'%Y-%m-%d').date()
-    return model.parteB2(analyzer,keyl,keyh,top)
+def parteB2(analyzer, keylo, keyhi, top):
+    keylo = datetime.datetime.strptime(keylo,'%Y-%m-%d').date()
+    keyhi = datetime.datetime.strptime(keyhi,'%Y-%m-%d').date()
+    return model.parteB2(analyzer, keylo, keyhi, top)
 
   
 #datetime.datetime.strptime(hora,'%Y-%m-%d')
 #datetime.datetime.strptime(hora,'%H:%M')
 
-# ----------------------------
-#     funciones menu 2
-# ----------------------------
-
-# Debe existir una funcion en el model que calcule los puntos de cada pinche taksi
-# ------------------------------------------------------
-def mejorHorario(analyzer, area1, area2, hora_inicio, hora_fin):
+def parteC(analyzer, area1, area2, hora_inicio, hora_fin):
     return model.mejorHorario(analyzer, area1, area2, hora_inicio, hora_fin)
