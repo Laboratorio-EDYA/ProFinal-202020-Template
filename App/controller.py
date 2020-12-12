@@ -129,11 +129,6 @@ def parteB2(analyzer, keylo,keyhi,top):
 #     funciones menu 2
 # ----------------------------
 
-def puntosFecha(analyzer, date, top):
-    return model.parteB1(analyzer, date, top)
-
-def puntosRango(analyzer, date1, date2, top):
-    return model.parteB2(analyzer, date1, date2, top)
 # Debe existir una funcion en el model que calcule los puntos de cada pinche taksi
 # ------------------------------------------------------
 def mejorHorario(analyzer, area1, area2, hora_inicio, hora_fin):

@@ -124,12 +124,12 @@ def topN(analyzer, top):
 # ----------------------------
 
 def puntosFecha(analyzer, date, top):
-    data = controller.puntosFecha(analyzer, date, top)
+    data = ctrl.parteB1(analyzer, date, top)
     print(data)
 
 
 def puntosRango(analyzer, date1, date2, top):
-    data = controller.puntosRango(analyzer, date1, date2, top)
+    data = ctrl.parteB2(analyzer, date1, date2, top)
     print(data)
 # Debe existir una funcion en el model que calcule los puntos de cada pinche taksi
 # ------------------------------------------------------

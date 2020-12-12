@@ -330,8 +330,7 @@ def parteB2(analyzer,keylo,keyhi,top):
     print(listMost)
     return listMost #lista de los ids
 """ 
-def parteC1():
-def parteC2():
+def parteC(analyzer, area1, area2, hora_inicio, hora_fin):
 """
 
 # ==============================
