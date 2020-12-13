@@ -109,8 +109,8 @@ def parteA2(analyzer):
 def parteA3(analyzer):
     return model.parteA3(analyzer)
 
-def parteA4(analyzer, top): 
-    return model.parteA4(analyzer, top)
+def parteA4(analyzer): 
+    return model.parteA4(analyzer)
 
 def parteB1(analyzer, top, fecha):
     fecha = datetime.datetime.strptime(fecha,'%Y-%m-%d').date()
@@ -126,4 +126,4 @@ def parteB2(analyzer, keylo, keyhi, top):
 #datetime.datetime.strptime(hora,'%H:%M')
 
 def parteC(analyzer, area1, area2, hora_inicio, hora_fin):
-    return model.mejorHorario(analyzer, area1, area2, hora_inicio, hora_fin)
+    return model.parteC(analyzer, area1, area2, hora_inicio, hora_fin)
