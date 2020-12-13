@@ -97,28 +97,22 @@ def totalCompañias(analyzer):
     print(data,' compañías tiene al menos un taxi inscrito')
     
 def topM(analyzer, top):
-    res = []    
     data = ctrl.parteA3(analyzer)
-    print(data)
-    for each_data in data:
-        res.append(each_data)
-        if len(res) >= top:
-            break
-    print('El top ',top,' de las compañías ordenadas por taxis afiliados es: ')
-    for each_data in res:
-        print(str(each_data))
+    iterator = it.newIterator(data)
+    counter = 0
+    while it.hasNext(iterator) and counter < top:
+        actual = it.next(iterator)
+        print(counter+1, '. ', actual['key'], 'con ', actual['value'], 'taxis')
+        counter += 1
 
 def topN(analyzer, top): 
-    res = []    
-    data = ctrl.parteA3(analyzer)
-    print(data)
-    for each_data in data:
-        res.append(each_data)
-        if len(res) >= top:
-            break
-    print('El top ',top,' de las compañías que más servicios prestaron es: ')
-    for each_data in res:
-        print(str(each_data))
+    data = ctrl.parteA4(analyzer)
+    iterator = it.newIterator(data)
+    counter = 0
+    while it.hasNext(iterator) and counter < top:
+        actual = it.next(iterator)
+        print(counter+1, '. ', actual['key'], 'con ', actual['value'], 'viajes')
+        counter += 1
 
 # ----------------------------
 #     funciones menu 2
@@ -130,7 +124,8 @@ def puntosFecha(analyzer, top, fecha):
     iterator = it.newIterator(data)
     print('El top ', top,' de taxis con más puntos según la fecha dada son: ' )
     while it.hasNext(iterator):
-        print(str(i)+'. Taxi ID: ',it.next(iterator))
+        actual = it.next(iterator)
+        print(str(i)+'. Taxi ID: ',actual[0],' con ', round(actual[1],2), ' puntos.' )
         i += 1
 
 def puntosRango(analyzer, date1, date2, top):
@@ -139,7 +134,8 @@ def puntosRango(analyzer, date1, date2, top):
     print('El top ', top,' de taxis con más puntos según el rango de fechas ',date1,' y ',date2, ' son: ')
     i = 1
     while it.hasNext(iterator):
-        print(str(i)+'. Taxi ID: ',it.next(iterator))
+        actual = it.next(iterator)
+        print(str(i)+'. Taxi ID: ',actual[0],' con ', round(actual[1],2), ' puntos.' )
         i += 1
 
 # El addDate añade cada fecha junto con un taxi y sus puntos, millas y entre otros
@@ -159,6 +155,9 @@ def mejorHorario(analyzer):    # Req. 3
     else:
         if inicio_M > 0 and inicio_M <= 15:
             inicio_M = '15'
+            hora_inicio = str(inicio_H) + ':' + inicio_M
+        elif inicio_M == 0:    
+            inicio_M = '00'
             hora_inicio = str(inicio_H) + ':' + inicio_M
         elif inicio_M > 15 and inicio_M <= 30:    
             inicio_M = '30'
@@ -184,8 +183,15 @@ def mejorHorario(analyzer):    # Req. 3
             fin_H += 1
             hora_fin = str(fin_H) + ':' + fin_M
         data = ctrl.parteC(analyzer, area1, area2, hora_inicio, hora_fin)
-    print(data)
-
+        print(data[3])
+        print('El mejor horario de ', area1,' a ', area2,' es de ',str(data[1][1]),' a ',str(data[2][1]),' con una duracion promedio de ', data[0], 'segundos.' )
+        iterator = it.newIterator(data[3])
+        string = []
+        while it.hasNext(iterator):
+            current = it.next(iterator)
+            string.append('Community Area '+str(current['vertexA'][0])+' -> Community Area '+str(current['vertexB'][0]))
+        string = ", ".join(string)
+        print('Haciendo el siguiente recorrido: ', string)
 
 def cargarDatos(analyzer):
     print("\nCargando información de taxis de Chicago .....")

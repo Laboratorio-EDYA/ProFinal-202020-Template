@@ -30,12 +30,14 @@ from DISClib.ADT import list as lt
 from DISClib.DataStructures import listiterator as it
 from DISClib.Algorithms.Graphs import scc
 from DISClib.Algorithms.Graphs import dijsktra as djk
+from DISClib.Algorithms.Graphs import dfs
 from DISClib.Utils import error as error
 from DISClib.ADT import orderedmap as om
 import operator as o 
 import datetime 
 
 from DISClib.Algorithms.Sorting import mergesort as ms
+from DISClib.Algorithms.Sorting import quicksort as q
 
 assert config
 
@@ -111,7 +113,7 @@ def addTrips(analyzer, actual):
             m.put(current['value'], actual['trip_id'], value['value'] + 1)
 
 def addDate(analyzer, actual):
-    date=getDateTimeTaxiTrip(actual)[0]
+    date = getDateTimeTaxiTrip(actual['trip_start_timestamp'])[0]
     current = om.get(analyzer['datesByTaxis'], date)
     if current is None:
         mapa = m.newMap(comparefunction=compareDatesValues)
@@ -151,16 +153,19 @@ def addDate(analyzer, actual):
             m.put(current['value'], actual['taxi_id'], [money,millas,total,puntos])
 
 def addCommunity(analyzer, actual):
-    vertexA = actual['pickup_community_area']
-    vertexB = actual['dropoff_community_area']
-    if vertexA != vertexB:
-        addVertex(analyzer, vertexA)
-        addVertex(analyzer, vertexB)
-        if (actual['trip_seconds']) != '':
-            time = float(actual['trip_seconds'])
-        else:
-            time = 0
-        addConnection(analyzer, vertexA, vertexB, time)
+    start = actual['trip_start_timestamp']
+    end = actual['trip_end_timestamp']
+    if start != '' and end != '':
+        vertexA = (actual['pickup_community_area'],getDateTimeTaxiTrip(start)[1])
+        vertexB = (actual['dropoff_community_area'],getDateTimeTaxiTrip(end)[1])
+        if vertexA != vertexB:
+            addVertex(analyzer, vertexA)
+            addVertex(analyzer, vertexB)
+            if (actual['trip_seconds']) != '':
+                time = float(actual['trip_seconds'])
+            else:
+                time = 0
+            addConnection(analyzer, vertexA, vertexB, time)
 
 def addVertex(analyzer,vertex):
     try:
@@ -176,13 +181,13 @@ def addConnection(analyzer, origin, destination, duration):
     """
     edge = gr.getEdge(analyzer['graph'], origin, destination)
     if edge is not None:
-        edge['pesos'] += round(((duration) / 60),2)
+        edge['pesos'] += duration
         edge['size'] += 1
         edge['weight'] = round((edge['pesos']/edge['size']),2)
     else:
-        gr.addEdge(analyzer['graph'], origin, destination, round(((duration) / 60),2))
+        gr.addEdge(analyzer['graph'], origin, destination, duration)
         edge = gr.getEdge(analyzer['graph'], origin, destination)
-        edge['pesos'] += round((duration / 60),2)
+        edge['pesos'] += duration
         edge['size'] += 1
         edge['weight'] = round((edge['pesos']/edge['size']),2)
 
@@ -216,26 +221,6 @@ def maxKey(analyzer):
     """
     return om.maxKey(analyzer['dateIndex'])
 
-def getAccidentsByRange(analyzer, initialDate, finalDate):
-    """
-    Retorna el numero de crimenes en un rago de fechas.
-    """
-    lst = om.values(analyzer['dateIndex'], initialDate, finalDate)
-    return lst
-
-def getAccidentsByRangeCode(analyzer, initialDate, offensecode):
-    """
-    Para una fecha determinada, retorna el numero de crimenes
-    de un tipo especifico.w
-    """
-    accidentdate = om.get(analyzer['dateIndex'], initialDate)
-    if accidentdate['key'] is not None:
-        offensemap = me.getValue(accidentdate)['offenseIndex']
-        numoffenses = m.get(offensemap, offensecode)
-        if numoffenses is not None:
-            return m.size(me.getValue(numoffenses)['lstoffenses'])
-        return 0
-
 # ==============================
 # Funciones Helper
 # ==============================
@@ -258,10 +243,7 @@ def getDateTimeTaxiTrip(taxitrip):
     Los datos time se pueden comparar con <, >, <=, >=, ==, !=
 
     """
-
-    tripstartdate = taxitrip['trip_start_timestamp']
-
-    taxitripdatetime = datetime.datetime.strptime(tripstartdate, '%Y-%m-%dT%H:%M:%S.%f')
+    taxitripdatetime = datetime.datetime.strptime(taxitrip, '%Y-%m-%dT%H:%M:%S.%f')
 
     return taxitripdatetime.date(), taxitripdatetime.time()
 
@@ -351,32 +333,57 @@ def parteB2(analyzer,keylo,keyhi,top):
     sortedDict = sorted(dictRes.items(), key = o.itemgetter(1), reverse = True)
     listIds = lt.newList()
     for i in range(top):
-        lt.addLast(listIds,sortedDict[i][0])
+        lt.addLast(listIds,sortedDict[i])
     return listIds
         
-
-""" 
 def parteC(analyzer, area1, area2, hora_inicio, hora_fin):
-"""
+    area1 = float(area1)
+    area2 = float(area2)
+    inicio = datetime.datetime.strptime(hora_inicio, '%H:%M').time()
+    final = datetime.datetime.strptime(hora_fin, '%H:%M').time()
+    vertices = gr.vertices(analyzer['graph'])
+    iterator = it.newIterator(vertices)
+    vertices_area1 = lt.newList()
+    vertices_area2 = lt.newList()
+    menor = [0,0,0,0]
+    while it.hasNext(iterator):
+        actual = it.next(iterator)
+        if actual[0] != "" and float(actual[0].strip()) == area1 and actual[1] > inicio:
+            lt.addLast(vertices_area1, actual)
+        elif actual[0] != "" and float(actual[0].strip()) == area2 and actual[1] < final:
+            lt.addLast(vertices_area2, actual)
+    iterator = it.newIterator(vertices_area1)
+    while it.hasNext(iterator):
+        actual = it.next(iterator)
+        diks = djk.Dijkstra(analyzer['graph'],actual)
+        iterator2 = it.newIterator(vertices_area2)
+        while it.hasNext(iterator2):
+            current = it.next(iterator2)
+            cost = djk.distTo(diks, current)
+            if menor[0] == 0:
+                menor[0] = cost
+                menor[1] = actual
+                menor[2] = current
+                menor[3] = djk.pathTo(diks, current)
+            elif cost < menor[0]:
+                menor[0] = cost
+                menor[1] = actual
+                menor[2] = current
+                menor[3] = djk.pathTo(diks, current)
+    return menor
+
+
+
+
 
 # ==============================
 # Funciones de Comparacion
 # ==============================
 def compareTaxisValues(company1, company2):
-    if (company1['value'] == company2['value']):
-        return 0
-    elif company1['value'] > company2['value']:
-        return 1
-    else:
-        return -1
+    return company1['value'] > company2['value']
 
 def compareTripsValues(trip1, trip2):
-    if (trip1['value'] == trip2['value']):
-        return 0
-    elif trip1['value'] > trip2['value']:
-        return 1
-    else:
-        return -1
+    return trip1['value'] > trip2['value']
 
 def compareTaxis(company1, company2):
     if (company1 == company2['key']):
