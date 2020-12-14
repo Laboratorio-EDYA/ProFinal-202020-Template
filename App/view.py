@@ -46,7 +46,7 @@ operación seleccionada.
 #  Variables
 # ___________________________________________________
 
-taxifile = 'taxi-trips-wrvz-psew-subset-small.csv'
+taxifile = 'taxi-trips-wrvz-psew-subset-large.csv'
 initialStation = None
 recursionLimit = 30000
 
@@ -110,7 +110,7 @@ def topM(analyzer, top):
 
 def topN(analyzer, top): 
     res = []    
-    data = ctrl.parteA3(analyzer)
+    data = ctrl.parteA4(analyzer)
     print(data)
     for each_data in data:
         res.append(each_data)

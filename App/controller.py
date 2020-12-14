@@ -126,4 +126,4 @@ def parteB2(analyzer, keylo, keyhi, top):
 #datetime.datetime.strptime(hora,'%H:%M')
 
 def parteC(analyzer, area1, area2, hora_inicio, hora_fin):
-    return model.mejorHorario(analyzer, area1, area2, hora_inicio, hora_fin)
+    return model.parteC(analyzer, area1, area2, hora_inicio, hora_fin)

@@ -43,8 +43,7 @@ assert config
 En este archivo definimos los TADs que vamos a usar y las operaciones
 de creacion y consulta sobre las estructuras de datos.
 """
-#datetime.datetime.strptime(hora,'%Y-%m-%d')
-#datetime.datetime.strptime(hora,'%H:%M')
+
 # -----------------------------------------------------
 #                       API
 # -----------------------------------------------------
@@ -216,25 +215,6 @@ def maxKey(analyzer):
     """
     return om.maxKey(analyzer['dateIndex'])
 
-def getAccidentsByRange(analyzer, initialDate, finalDate):
-    """
-    Retorna el numero de crimenes en un rago de fechas.
-    """
-    lst = om.values(analyzer['dateIndex'], initialDate, finalDate)
-    return lst
-
-def getAccidentsByRangeCode(analyzer, initialDate, offensecode):
-    """
-    Para una fecha determinada, retorna el numero de crimenes
-    de un tipo especifico.w
-    """
-    accidentdate = om.get(analyzer['dateIndex'], initialDate)
-    if accidentdate['key'] is not None:
-        offensemap = me.getValue(accidentdate)['offenseIndex']
-        numoffenses = m.get(offensemap, offensecode)
-        if numoffenses is not None:
-            return m.size(me.getValue(numoffenses)['lstoffenses'])
-        return 0
 
 # ==============================
 # Funciones Helper
@@ -248,23 +228,15 @@ def gradosAkilometros2(x):
 def getDateTimeTaxiTrip(taxitrip):
 
     """
-
     Recibe la informacion de un servicio de taxi leido del archivo de datos (parametro).
-
     Retorna de forma separada la fecha (date) y el tiempo (time) del dato 'trip_start_timestamp'
-
     Los datos date se pueden comparar con <, >, <=, >=, ==, !=
-
     Los datos time se pueden comparar con <, >, <=, >=, ==, !=
-
     """
 
     tripstartdate = taxitrip['trip_start_timestamp']
-
     taxitripdatetime = datetime.datetime.strptime(tripstartdate, '%Y-%m-%dT%H:%M:%S.%f')
-
     return taxitripdatetime.date(), taxitripdatetime.time()
-
 
 # ==============================
 # Requerimientosta
