@@ -138,9 +138,7 @@ def puntosRango(analyzer, date1, date2, top):
         print(str(i)+'. Taxi ID: ',actual[0],' con ', round(actual[1],2), ' puntos.' )
         i += 1
 
-# El addDate añade cada fecha junto con un taxi y sus puntos, millas y entre otros
 
-# ------------------------------------------------------
 def mejorHorario(analyzer):    # Req. 3
     hora_inicio = ''
     hora_fin = ''
@@ -183,7 +181,6 @@ def mejorHorario(analyzer):    # Req. 3
             fin_H += 1
             hora_fin = str(fin_H) + ':' + fin_M
         data = ctrl.parteC(analyzer, area1, area2, hora_inicio, hora_fin)
-        print(data[3])
         print('El mejor horario de ', area1,' a ', area2,' es de ',str(data[1][1]),' a ',str(data[2][1]),' con una duracion promedio de ', data[0], 'segundos.' )
         iterator = it.newIterator(data[3])
         string = []
@@ -289,7 +286,7 @@ def main():
                     else:
                         print('Opcion invalida .....')
 
-        elif inputs == 4:
+        elif inputs == 4:   # Req. 3
             if analyzer == None:
                 print('¡KELLY CARGUE EL ARCHIVO PRIMERO!')
             else:

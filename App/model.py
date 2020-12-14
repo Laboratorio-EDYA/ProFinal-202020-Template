@@ -33,20 +33,17 @@ from DISClib.Algorithms.Graphs import dijsktra as djk
 from DISClib.Algorithms.Graphs import dfs
 from DISClib.Utils import error as error
 from DISClib.ADT import orderedmap as om
-import operator as o 
-import datetime 
-
 from DISClib.Algorithms.Sorting import mergesort as ms
 from DISClib.Algorithms.Sorting import quicksort as q
-
+import operator as o 
+import datetime 
 assert config
 
 """
 En este archivo definimos los TADs que vamos a usar y las operaciones
 de creacion y consulta sobre las estructuras de datos.
 """
-#datetime.datetime.strptime(hora,'%Y-%m-%d')
-#datetime.datetime.strptime(hora,'%H:%M')
+
 # -----------------------------------------------------
 #                       API
 # -----------------------------------------------------
@@ -229,27 +226,21 @@ def gradosAkilometros2(x):
     try:
         return str(a[0])+'.'+str(a[1])+str(a[2])
     except:
-        return str(a[0])+'.'+str(a[1])    
+        return str(a[0])+'.'+str(a[1])
+
 def getDateTimeTaxiTrip(taxitrip):
-
     """
-
     Recibe la informacion de un servicio de taxi leido del archivo de datos (parametro).
-
     Retorna de forma separada la fecha (date) y el tiempo (time) del dato 'trip_start_timestamp'
-
     Los datos date se pueden comparar con <, >, <=, >=, ==, !=
-
     Los datos time se pueden comparar con <, >, <=, >=, ==, !=
-
     """
     taxitripdatetime = datetime.datetime.strptime(taxitrip, '%Y-%m-%dT%H:%M:%S.%f')
-
     return taxitripdatetime.date(), taxitripdatetime.time()
 
 
 # ==============================
-# Requerimientosta
+#       Requerimientos
 # ==============================
 
 def parteA1(analyzer):
@@ -373,12 +364,10 @@ def parteC(analyzer, area1, area2, hora_inicio, hora_fin):
     return menor
 
 
-
-
-
 # ==============================
 # Funciones de Comparacion
 # ==============================
+
 def compareTaxisValues(company1, company2):
     return company1['value'] > company2['value']
 
@@ -409,6 +398,7 @@ def compareDates(date1, date2):
         return 1
     else:
         return -1
+
 def compareDatesValues(date1, date2):
     if date1 == date2['key']:
         return 0
